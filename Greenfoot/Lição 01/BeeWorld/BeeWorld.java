@@ -9,6 +9,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class BeeWorld extends World
 {
     private Abelha abelha = null;
+    private int score;
+    private Placar placar=null;
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -37,11 +39,19 @@ public class BeeWorld extends World
             int ang = Greenfoot.getRandomNumber(360);
             addObject(new Mosca(vel,ang), pX, pY);
         }
+        //Criando o placar do mundo
+        placar = new Placar();
+        addObject(placar, 750, 30);
     }
     /**
      * getter para obter a instância da abelha criada no mundo.
      */
     public Abelha getAbelha(){
         return abelha;
+    }
+    
+    public void addScore(int value){
+        score+=value;//score = score + value;
+        placar.setTexto("Score: " +score);
     }
 }

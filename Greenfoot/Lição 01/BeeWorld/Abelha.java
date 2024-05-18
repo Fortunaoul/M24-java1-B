@@ -13,6 +13,7 @@ public class Abelha extends Actor
     //Campos ou Fields
     public int vidas = 0;
     public int score = 0;
+    public int imgIdx = 0;
     //Criando campo do tipo conjunto de imagens 
     private GreenfootImage[] imagens;
     //Constructors
@@ -34,6 +35,7 @@ public class Abelha extends Actor
     {
         // Add your action code here.
         move(3);
+        trocarImagem();
         if (Greenfoot.isKeyDown("left")) {
             turn(-10);
         }
@@ -49,7 +51,7 @@ public class Abelha extends Actor
         //Mostra quantidades de vidas
         mostrarVidas();
         //Mostra o score
-        mostrarScore();
+        //mostrarScore();
     }
 
     /**
@@ -109,8 +111,12 @@ public class Abelha extends Actor
         if(isTouching(Mosca.class)){
             //remove a mosca tocada
             removeTouching(Mosca.class);
+            //Tocar o Slarp
+            Greenfoot.playSound("slarp.wav");
             //Aumentar o score
             score += PONTOS;
+            //Colocando o score do mundo
+            ((BeeWorld)getWorld()).addScore(PONTOS);
             //Adicionando uma nova mosca no mundo
             int pX = Greenfoot.getRandomNumber(getWorld().getWidth());
             int pY = Greenfoot.getRandomNumber(getWorld().getHeight());
@@ -123,6 +129,7 @@ public class Abelha extends Actor
      */
     public void capturadaPelaAranha(){
         if(isTouching(Aranha.class)){
+            Greenfoot.playSound("ouch.wav");
             int pX = Greenfoot.getRandomNumber(getWorld().getWidth());
             int pY = Greenfoot.getRandomNumber(getWorld().getHeight());
             setLocation(pX, pY);
@@ -139,5 +146,10 @@ public class Abelha extends Actor
     public void mostrarScore(){
         getWorld().showText("Score: "+ score, 700, 20);
     }
+    public void trocarImagem(){
+        setImage(imagens[imgIdx]);
+        imgIdx=(imgIdx+1)%4;
+    }
+    
 }
 
